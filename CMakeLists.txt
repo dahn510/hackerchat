@@ -59,6 +59,10 @@ endif()
 include(CMakeDependentOption)
 include(GNUInstallDirs)
 
+
+
+
+
 #
 # NOTE: Set C/C++ parameters for all targets in this CMakeLists.txt
 #
@@ -146,6 +150,7 @@ if(HACKERCHAT_EXAMPLES)
   add_subdirectory("examples")
 endif()
 
+
 print(STATUS "Building main executable")
 set(BINARY "${PROJECT_NAME}-client")
 add_executable(${BINARY} ${HACKERCHAT_GLOBBED_SOURCES})
@@ -153,3 +158,10 @@ add_executable(${BINARY} ${HACKERCHAT_GLOBBED_SOURCES})
 target_include_directories(${BINARY} PUBLIC ${HACKERCHAT_INCLUDE_DIR})
 # NOTE: Link 3rd party libraries with the executable here
 target_link_libraries(${BINARY} PRIVATE stdc++fs fmt::fmt)
+
+#
+# Note: Find Thread package in the system to be linked in compile time
+#
+set(THREADS_PREFER_PTHREADS_FLAG True)
+find_package(Threads REQUIRED)
+target_link_libraries(${BINARY} PRIVATE Threads::Threads)
